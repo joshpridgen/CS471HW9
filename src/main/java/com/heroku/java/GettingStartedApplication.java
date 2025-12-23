@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.UUID;
 
 @SpringBootApplication
 @Controller
@@ -30,9 +31,10 @@ public class GettingStartedApplication {
     String database(Map<String, Object> model) {
         try (Connection connection = dataSource.getConnection()) {
             final var statement = connection.createStatement();
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
-            statement.executeUpdate("INSERT INTO ticks VALUES (now())");
-
+//            statement.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)");
+//            statement.executeUpdate("INSERT INTO ticks VALUES (now())");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS table_timestamp_and_random_string (tick timestamp, random_string varchar(50))");
+            statement.executeUpdate("INSERT INTO table_timestamp_and_random_string VALUES (now(), '" + getRandomString() + "')");
             final var resultSet = statement.executeQuery("SELECT tick FROM ticks");
             final var output = new ArrayList<>();
             while (resultSet.next()) {
@@ -46,6 +48,10 @@ public class GettingStartedApplication {
             model.put("message", t.getMessage());
             return "error";
         }
+    }
+
+    private String getRandomString() {
+        return UUID.randomUUID().toString();
     }
 
     public static void main(String[] args) {
