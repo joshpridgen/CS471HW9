@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>DB Input</title>
+</head>
+<body>
+<h1>Enter a string to store in the database</h1>
+
+<form method="post" action="/dbinput">
+    <label for="userString">String:</label>
+    <input id="userString" name="userString" type="text" maxlength="50" required />
+    <button type="submit">Submit</button>
+</form>
+
+<p><a href="/database">View database output</a></p>
+</body>
+</html>
